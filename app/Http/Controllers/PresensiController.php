@@ -315,7 +315,6 @@ class PresensiController extends Controller
         $nik = Auth::guard('karyawan')->user()->nik;
         $nama_lengkap = $request->nama_lengkap;
         $no_hp = $request->no_hp;
-        $password = Hash::make($request->password);
         $karyawan = DB::table('karyawan')->where('nik', $nik)->first();
 
         // Validasi untuk file yang diupload
@@ -336,20 +335,20 @@ class PresensiController extends Controller
         }
 
         // Periksa apakah password diisi atau tidak
-        if (!empty($request->password)) {
-            $data = [
-                'nama_lengkap' => $nama_lengkap,
-                'no_hp' => $no_hp,
-                'password' => $password,
-                'foto' => $foto
-            ];
+        $password = $request->password;
+        if (!empty($password)) {
+            $password = Hash::make($password);
         } else {
-            $data = [
-                'nama_lengkap' => $nama_lengkap,
-                'no_hp' => $no_hp,
-                'foto' => $foto,
-            ];
+            // Jika password tidak diisi, gunakan password lama
+            $password = $karyawan->password;
         }
+
+        $data = [
+            'nama_lengkap' => $nama_lengkap,
+            'no_hp' => $no_hp,
+            'password' => $password,
+            'foto' => $foto
+        ];
 
         $update = DB::table('karyawan')->where('nik', $nik)->update($data);
         if ($update) {
@@ -358,6 +357,8 @@ class PresensiController extends Controller
             return redirect()->back()->with(['error' => 'Data Gagal Diupdate']);
         }
     }
+
+
 
 
     public function histori()
