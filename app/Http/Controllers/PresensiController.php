@@ -330,8 +330,8 @@ class PresensiController extends Controller
             $folderPath = "public/uploads/karyawan/";
             $request->file('foto')->storeAs($folderPath, $foto);
         } else {
-            // Jika tidak ada file foto baru, gunakan foto lama
-            $foto = $karyawan->foto;
+            // Jika tidak ada file foto baru, gunakan foto lama jika foto lama tidak kosong
+            $foto = $request->has('foto_lama') ? $request->input('foto_lama') : null;
         }
 
         // Periksa apakah password diisi atau tidak
@@ -357,8 +357,6 @@ class PresensiController extends Controller
             return redirect()->back()->with(['error' => 'Data Gagal Diupdate']);
         }
     }
-
-
 
 
     public function histori()
