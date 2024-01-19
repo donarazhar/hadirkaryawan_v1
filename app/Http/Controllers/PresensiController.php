@@ -323,14 +323,19 @@ class PresensiController extends Controller
             'foto' => 'image|mimes:png,jpg|max:1024'
         ]);
 
-        // Proses Upload Foto
+        // Periksa apakah ada file foto yang diupload
         if ($request->hasFile('foto')) {
             $foto = $nik . "." . $request->file('foto')->getClientOriginalExtension();
+
+            // Proses simpan update foto
+            $folderPath = "public/uploads/karyawan/";
+            $request->file('foto')->storeAs($folderPath, $foto);
         } else {
+            // Jika tidak ada file foto baru, gunakan foto lama
             $foto = $karyawan->foto;
         }
 
-        // Proses Edit Profile
+        // Periksa apakah password diisi atau tidak
         if (!empty($request->password)) {
             $data = [
                 'nama_lengkap' => $nama_lengkap,
@@ -342,23 +347,18 @@ class PresensiController extends Controller
             $data = [
                 'nama_lengkap' => $nama_lengkap,
                 'no_hp' => $no_hp,
-                'password' => $password,
                 'foto' => $foto,
             ];
         }
 
         $update = DB::table('karyawan')->where('nik', $nik)->update($data);
         if ($update) {
-            // Proses simpan update foto
-            if ($request->hasFile('foto')) {
-                $folderPath = "public/uploads/karyawan/";
-                $request->file('foto')->storeAs($folderPath, $foto);
-            }
-            return Redirect::back()->with(['success' => 'Data Berhasil Diupdate']);
+            return redirect()->back()->with(['success' => 'Data Berhasil Diupdate']);
         } else {
-            return Redirect::back()->with(['error' => 'Data Gagal Diupdate']);
+            return redirect()->back()->with(['error' => 'Data Gagal Diupdate']);
         }
     }
+
 
     public function histori()
     {
