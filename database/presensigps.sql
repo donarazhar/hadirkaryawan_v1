@@ -3,10 +3,10 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Des 2023 pada 11.30
+-- Waktu pembuatan: 10 Bulan Mei 2024 pada 15.27
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.1.25
-
+akun_aasakun_kelompok
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -84,7 +84,7 @@ CREATE TABLE `jam_kerja` (
 --
 
 INSERT INTO `jam_kerja` (`kode_jam_kerja`, `nama_jam_kerja`, `awal_jam_masuk`, `jam_masuk`, `akhir_jam_masuk`, `jam_pulang`, `lintashari`) VALUES
-('jk01', 'Shift 1', '12:00:00', '13:55:00', '13:57:00', '13:58:00', '0'),
+('jk01', 'Shift 1', '07:30:00', '08:00:00', '08:30:00', '15:00:00', '0'),
 ('jk02', 'Shift 2', '13:30:00', '13:40:00', '13:47:00', '13:48:00', '0'),
 ('jk03', 'Shift 3', '10:00:00', '11:30:00', '12:00:00', '23:00:00', '0'),
 ('jk04', 'Shift 4', '13:00:00', '19:20:00', '19:50:00', '23:00:00', '0'),
@@ -115,7 +115,7 @@ CREATE TABLE `karyawan` (
 INSERT INTO `karyawan` (`nik`, `nama_lengkap`, `jabatan`, `no_hp`, `password`, `remember_token`, `foto`, `kode_dept`, `kode_cabang`) VALUES
 ('1232', 'Lala Dal Army', 'Karyawan PKL', '08811994872', '$2y$12$guozvJE3vcpkxuvBAQsS3O1zEaxDcsjC9xYqkXvMmy5d4iQ0yVXye', NULL, NULL, 'mkt', 'msj'),
 ('1233', 'Rizqi Azhar Kamil', 'Anak Tercinta', '08811994872', '$2y$12$68Au9Hug4h8R95pSiM7Wc.Anbf5g9GGRdld4V5swYVFS7BgC1wICO', NULL, '1233.jpg', 'it', 'msj'),
-('1234', 'Donarsi Al Azhar', 'Head of DAL Army', '08811994872', '$2y$12$zjPvlUxq/OzAPhJQGoZ7P.K8CJVPhV3Ch5PDJNvzUAj1v9aamn7Zi', NULL, '1234.jpg', 'it', 'rmh'),
+('1234', 'Donarsi Al Azhar', 'Head of DAL Army', '08811994872', '$2y$12$gB2.CkeT0r24/rF6h/HcYOK0vUH67gWSgnx0Y4adpycPeeHNaNFPy', NULL, '1234.jpg', 'it', 'msj'),
 ('1235', 'Puspita Suswanti', 'Staf TU', '08811994872', '$2y$12$ntOCw8V1e7RDVq/M9LbH4OOnjfDBliojt3jgrbTzJj2ebYQRi53v6', NULL, '1235.jpg', 'mkt', 'pst'),
 ('1236', 'Agus Soni', 'Bagian Akuntansi', '08811994872', '$2y$12$LX1vzq1UTS4da3Du5v8l8eegqrHJFSSYgQFCI2FPTGLf8i5mS6nva', NULL, '1236.png', 'mkt', 'rmh'),
 ('2222', 'Agung Jamal', 'Marbot Kebersihan', '08811994872', '$2y$12$q6C5pV3EthINHWci9oxdiO2k.30cFfSPX/fpim9RiD62jc.C.0Owe', NULL, NULL, 'mkt', 'msj');
@@ -321,7 +321,9 @@ CREATE TABLE `presensi` (
 --
 
 INSERT INTO `presensi` (`id`, `nik`, `tgl_presensi`, `jam_in`, `jam_out`, `foto_in`, `foto_out`, `lokasi_in`, `lokasi_out`, `kode_jam_kerja`, `status`, `kode_izin`) VALUES
-(1, '1236', '2023-12-27', '20:51:32', NULL, '1236_2023-12-27_in.png', NULL, '-6.243176999999999,106.750999', NULL, 'jk05', 'h', NULL);
+(1, '1236', '2023-12-27', '20:51:32', NULL, '1236_2023-12-27_in.png', NULL, '-6.243176999999999,106.750999', NULL, 'jk05', 'h', NULL),
+(2, '1234', '2023-12-29', '20:32:19', '20:36:03', '1234_2023-12-29_in.png', '1234_2023-12-29_out.png', '-6.2430564,106.7512344', '-6.2430706,106.7512404', 'jk01', 'h', NULL),
+(3, '1234', '2023-12-30', '07:33:25', NULL, '1234_2023-12-30_in.png', NULL, '-6.2350607,106.7991329', NULL, 'jk01', 'h', NULL);
 
 -- --------------------------------------------------------
 
@@ -426,7 +428,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `presensi`
 --
 ALTER TABLE `presensi`
-  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
